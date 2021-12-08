@@ -16,6 +16,14 @@ resource docker_container container-app {
     env = var.containers[count.index].envVariables
 }
 
+resource local_file nginx-confg {
+    filename = "nginx.conf"
+    file_permission = 0644
+    content = templatefile("nginx.conf.tpl", {
+        ports = flatten(docker_container.container-app[*].ports[*].external)
+    })
+}
+
 output externalPorts {
     value = flatten(docker_container.container-app[*].ports[*].external)
     sensitive = true
