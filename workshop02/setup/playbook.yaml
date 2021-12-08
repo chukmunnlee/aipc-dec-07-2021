@@ -1,0 +1,40 @@
+- name: Setup server
+  hosts: all
+  tasks:
+  - name: Install mandatory packages
+    apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: latest
+    loop:
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    - software-properties-common
+    - curl
+    - zip
+    - git 
+    - nginx
+
+  - name: Add Docker apt key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: Add repositories
+    apt_repository:
+      repo: "{{ item }}"
+      state: present
+    loop:
+    - "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    - "ppa:ansible/ansible"
+  - name: Install Docker and Ansible
+    apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: latest
+    loop:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io
+    - ansible
