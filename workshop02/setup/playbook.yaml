@@ -101,5 +101,5 @@
       upgrade: dist
       state: latest
 
-  - name: Reboot server
-    reboot:
+  #- name: Reboot server
+    #reboot:
