@@ -18,6 +18,7 @@ resource local_file inventory-yaml {
         host_name = digitalocean_droplet.myserver.name
         host_ip = digitalocean_droplet.myserver.ipv4_address
         private_key = "../${var.private_key}"
+        public_key = "../${var.public_key}"
     })
 }
 
